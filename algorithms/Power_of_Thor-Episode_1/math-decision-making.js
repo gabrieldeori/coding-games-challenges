@@ -43,10 +43,10 @@ while (true) {
   const dx = calcDiff(lightX, thorPosX)
   const dy = calcDiff(lightY, thorPosY)
 
-  let angle = Math.acos(dx / Math.sqrt(dx * dx + dy * dy));
+  let angle = Math.atan2(dy, dx);
 
-  if (dy < 0) {
-    angle = 2 * Math.PI - angle;
+  if (angle < 0) {
+    angle += 2 * Math.PI;
   }
 
   if (angle >= 0 && angle < Math.PI / 4) {

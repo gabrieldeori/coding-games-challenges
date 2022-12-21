@@ -33,11 +33,12 @@ function calcX(a, y, c) {
 const lineSlope = calcSlope(lightX, lightY, initialTx, initialTy);
 const lineConst = calcConstant(lineSlope, initialTx, initialTy);
 
+let thorPosX = initialTx;
+let thorPosY = initialTy;
+
 // game loop
 while (true) {
   const remainingTurns = parseInt(readline());
-  let thorPosX = initialTx;
-  let thorPosY = initialTy;
   let thorMovement = "";
 
   const dx = calcDiff(lightX, thorPosX)
@@ -51,20 +52,32 @@ while (true) {
 
   if (angle >= 0 && angle < Math.PI / 4) {
     thorMovement = "E";
+    thorPosX += 1;
   } else if (angle >= Math.PI / 4 && angle < Math.PI / 2) {
     thorMovement = "SE";
+    thorPosX += 1;
+    thorPosY += 1;
   } else if (angle >= Math.PI / 2 && angle < 3 * Math.PI / 4) {
     thorMovement = "S";
+    thorPosY += 1;
   } else if (angle >= 3 * Math.PI / 4 && angle < Math.PI) {
     thorMovement = "SW";
+    thorPosX -= 1;
+    thorPosY += 1;
   } else if (angle >= Math.PI && angle < 5 * Math.PI / 4) {
     thorMovement = "W";
+    thorPosX -= 1;
   } else if (angle >= 5 * Math.PI / 4 && angle < 3 * Math.PI / 2) {
     thorMovement = "NW";
+    thorPosX -= 1;
+    thorPosY -= 1;
   } else if (angle >= 3 * Math.PI / 2 && angle < 7 * Math.PI / 4) {
     thorMovement = "N";
+    thorPosY -= 1;
   } else {
     thorMovement = "NE";
+    thorPosX += 1;
+    thorPosY -= 1;
   }
 
   console.log(thorMovement);

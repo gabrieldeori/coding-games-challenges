@@ -12,7 +12,9 @@ for (let i = 0; i < n; i++) {
     if (tAbs < lowerTempAbs) {
       lowerTemp = t;
     } else if (tAbs == lowerTempAbs) {
-      lowerTemp = tAbs;
+      if (t > 0 || lowerTemp > 0) {
+        lowerTemp = tAbs;
+      }
     }
   }
 }

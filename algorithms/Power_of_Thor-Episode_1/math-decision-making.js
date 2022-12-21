@@ -34,11 +34,29 @@ const lineSlope = calcSlope(lightX, lightY, initialTx, initialTy);
 const lineConst = calcConstant(lineSlope, initialTx, initialTy);
 
 // Variáveis Iniciais
-let thorPos = [initialTx, initialTy];
+let thorPosX = initialTx;
+let thorPosY = initialTy;
 let thorMovement = "";
 
 // game loop
 while (true) {
   const remainingTurns = parseInt(readline());
+  const diffX = calcDiff(lightX, thorPosX)
+  const diffY = calcDiff(lightY, thorPosY)
+  let newThorPosX = thorPosX;
+  let newThorPosY = thorPosY;
+
+  if (thorPosX < lightX) {
+    newThorPosX += 1;
+  } else if (thorPosX > lightX) {
+    newThorPosX -= 1;
+  }
+
+  if (thorPosY < lightY) {
+    newThorPosY += 1;
+  } else if (newThorPosY > lightY) {
+    newThorPosY -= 1;
+  }
+
   console.log();
 }

@@ -33,47 +33,39 @@ function calcX(a, y, c) {
 const lineSlope = calcSlope(lightX, lightY, initialTx, initialTy);
 const lineConst = calcConstant(lineSlope, initialTx, initialTy);
 
-// Variáveis Iniciais
-let thorPosX = initialTx;
-let thorPosY = initialTy;
-
 // game loop
 while (true) {
   const remainingTurns = parseInt(readline());
-  const diffX = calcDiff(lightX, thorPosX)
-  const diffY = calcDiff(lightY, thorPosY)
-  let newThorPosX = thorPosX;
-  let newThorPosY = thorPosY;
+  let thorPosX = initialTx;
+  let thorPosY = initialTy;
   let thorMovement = "";
 
-  if (thorPosX < lightX) {
-    newThorPosX += 1;
-  } else if (thorPosX > lightX) {
-    newThorPosX -= 1;
+  const dx = calcDiff(lightX, thorPosX)
+  const dy = calcDiff(lightY, thorPosY)
+
+  let angle = Math.acos(dx / Math.sqrt(dx * dx + dy * dy));
+
+  if (dy < 0) {
+    angle = 2 * Math.PI - angle;
   }
 
-  if (thorPosY < lightY) {
-    newThorPosY += 1;
-  } else if (newThorPosY > lightY) {
-    newThorPosY -= 1;
+  if (angle >= 0 && angle < Math.PI / 4) {
+    thorMovement = "E";
+  } else if (angle >= Math.PI / 4 && angle < Math.PI / 2) {
+    thorMovement = "SE";
+  } else if (angle >= Math.PI / 2 && angle < 3 * Math.PI / 4) {
+    thorMovement = "S";
+  } else if (angle >= 3 * Math.PI / 4 && angle < Math.PI) {
+    thorMovement = "SW";
+  } else if (angle >= Math.PI && angle < 5 * Math.PI / 4) {
+    thorMovement = "W";
+  } else if (angle >= 5 * Math.PI / 4 && angle < 3 * Math.PI / 2) {
+    thorMovement = "NW";
+  } else if (angle >= 3 * Math.PI / 2 && angle < 7 * Math.PI / 4) {
+    thorMovement = "N";
+  } else {
+    thorMovement = "NE";
   }
 
-  if (diffX > diffY) { // Prioriza a X
-    newThorPosX = calcX(lineSlope, newThorPosY, lineConst);
-  } else if (diffX < diffY) { // Prioriza y
-    newThorPosY = calcX(lineSlope, newThorPosX, lineConst);
-  }
-
-  if (newThorPosY < lightY) {
-    thorMovement += "S";
-  } else if (newThorPosY) {
-    thorMovement +="N";
-  }
-
-  if (newThorPosX < lightX) {
-    thorMovement += "E";
-  } else if (newThorPosX > lightX) {
-    thorMovement += "W";
-  }
   console.log(thorMovement);
 }

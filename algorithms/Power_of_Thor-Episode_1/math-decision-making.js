@@ -36,7 +36,6 @@ const lineConst = calcConstant(lineSlope, initialTx, initialTy);
 // Variáveis Iniciais
 let thorPosX = initialTx;
 let thorPosY = initialTy;
-let thorMovement = "";
 
 // game loop
 while (true) {
@@ -45,6 +44,7 @@ while (true) {
   const diffY = calcDiff(lightY, thorPosY)
   let newThorPosX = thorPosX;
   let newThorPosY = thorPosY;
+  let thorMovement = "";
 
   if (thorPosX < lightX) {
     newThorPosX += 1;
@@ -64,5 +64,16 @@ while (true) {
     newThorPosY = calcX(lineSlope, newThorPosX, lineConst);
   }
 
-  console.log();
+  if (newThorPosY < lightY) {
+    thorMovement += "S";
+  } else if (newThorPosY) {
+    thorMovement +="N";
+  }
+
+  if (newThorPosX < lightX) {
+    thorMovement += "E";
+  } else if (newThorPosX > lightX) {
+    thorMovement += "W";
+  }
+  console.log(thorMovement);
 }

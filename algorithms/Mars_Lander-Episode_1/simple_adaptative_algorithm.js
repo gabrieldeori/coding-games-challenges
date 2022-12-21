@@ -16,12 +16,14 @@ while (true) {
     const rotate = parseInt(inputs[5]);
     const power = parseInt(inputs[6]);
 
-    const maxLandSpeed = -39;
-    const minLandSpeed = -38;
-    if (vSpeed < maxLandSpeed && outputPower < 4) {
-        outputPower += 1;
-    } else if (vSpeed > minLandSpeed && outputPower > 0) {
-        outputPower -= 1;
+    if (Y < 2235) {
+        const maxLandSpeed = -40;
+        const minLandSpeed = -39;
+        if (vSpeed < maxLandSpeed && outputPower < 4) {
+            outputPower += 1;
+        } else if (vSpeed > minLandSpeed && outputPower > 0) {
+            outputPower -= 1;
+        }
     }
 
     console.log(`0 ${outputPower}`);

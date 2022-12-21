@@ -58,5 +58,11 @@ while (true) {
     newThorPosY -= 1;
   }
 
+  if (diffX > diffY) { // Prioriza a X
+    newThorPosX = calcX(lineSlope, newThorPosY, lineConst);
+  } else if (diffX < diffY) { // Prioriza y
+    newThorPosY = calcX(lineSlope, newThorPosX, lineConst);
+  }
+
   console.log();
 }

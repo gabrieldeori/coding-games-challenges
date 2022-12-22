@@ -22,7 +22,7 @@ for (let i = 0; i < Q; i++) {
       }
     }
     for (let j = noisnetxe.length - 1; j >= 0; j--) {
-      extension += noisnetxe[j];
+      extension += noisnetxe[j].toLowerCase();
     }
     console.error(extension);
 }

@@ -5,11 +5,11 @@ const mapMime = new Map();
 
 for (let i = 0; i < N; i++) {
     var inputs = readline().split(' ');
-    const EXT = inputs[0];
-    const MT = inputs[1];
-    mapMime.set(EXT,MT)
+    const EXTENSIONS = inputs[0];
+    const MIME_TYPES = inputs[1];
+    mapMime.set(EXTENSIONS,MIME_TYPES)
 }
 for (let i = 0; i < Q; i++) {
-    const FNAME = readline();
+    const FILE_NAME = readline();
 }
 console.log('NORESPONSE');

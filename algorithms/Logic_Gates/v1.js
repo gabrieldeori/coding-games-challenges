@@ -5,9 +5,9 @@ const inputSignals = {};
 for (let i = 0; i < n; i++) {
     var inputs = readline().split(' ');
     const inputName = inputs[0];
-    const inputSignal = inputs[1].split('')
+    const inputBoolSignal = inputs[1].split('')
       .map(e => e === "-" ? true : false);
-    inputSignals[inputName] = inputSignal;
+    inputSignals[inputName] = inputBoolSignal;
 }
 
 for (let i = 0; i < m; i++) {

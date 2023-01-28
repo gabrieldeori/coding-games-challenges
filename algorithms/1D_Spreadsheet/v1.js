@@ -12,13 +12,17 @@ for (let i = 0; i < N; i++) {
   operations.push({operation, arg1, arg2});
 }
 
-for (let i = 0; i < operations.length; i++) {
-  const actualOperation = operations[i]
-  if (actualOperation['operation'] === "VALUE") {
-    console.log(actualOperation['arg1']);
+function processArguments(funcOperation) {
+  let result;
+
+  if (funcOperation['operation'] === "VALUE") {
+    return funcOperation['arg1'];
   } else {
-    
+    const arg1 = processArguments(operations[funcOperation['arg1']]);
+    const arg2 = processArguments(operations[funcOperation['arg2']]);
   }
+
+  return result;
 }
 
 console.error(valuesSheet);

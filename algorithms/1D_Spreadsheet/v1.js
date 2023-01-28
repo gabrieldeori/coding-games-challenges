@@ -1,6 +1,12 @@
 const N = parseInt(readline());
 const valuesSheet = {};
 const operations = [];
+const calculator = {
+  ADD: (arg1, arg2) => arg1 + arg2,
+  SUB: (arg1, arg2) => arg1 - arg2,
+  MULT: (arg1, arg2) => arg1 * arg2,
+  DIV: (arg1, arg2) => arg1 / arg2,
+}
 
 for (let i = 0; i < N; i++) {
   var inputs = readline().split(' ');

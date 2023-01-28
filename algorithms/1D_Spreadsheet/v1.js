@@ -13,27 +13,26 @@ for (let i = 0; i < N; i++) {
   const operation = inputs[0];
   const arg1 = inputs[1];
   const arg2 = inputs[2];
-  
-  console.error(operation, arg1, arg2);
-  const position = "$" + i;
-  if (operation === "VALUE") valuesSheet[position] = arg1;
-  operations.push({operation, arg1, arg2});
+  operations.push({cell: `$${i}`, operation, arg1, arg2});
 }
 
+console.log(valuesSheet, operations);
+
 function processArguments(funcOperation) {
-  
+  if (typeof funcOperation === "Number") {
+    return funcOperation;
+  }
+
+  const cell = funcOperation["cell"];
+
   if (funcOperation['operation'] === "VALUE") {
-    
-    const result = funcOperation['arg1'];
-    console.log(result);
-    return result;
+    const arg1 = funcOperation['arg1']
+    valuesSheet[cell] = arg1;
+    return { cell, result: arg1 };
   } else {
-    
     const arg1 = processArguments(operations[funcOperation['arg1']]);
     const arg2 = processArguments(operations[funcOperation['arg2']]);
-    const result = calculator(arg1, arg2);
-    console.log(result);
-    return result;
+    return { cell, result: calculator(arg1, arg2) };
   }
 }
 

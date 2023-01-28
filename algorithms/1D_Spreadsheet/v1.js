@@ -1,6 +1,6 @@
 const N = parseInt(readline());
 const valuesSheet = {};
-const operations = [];
+const operations = {};
 const calculator = {
   ADD: (arg1, arg2) => arg1 + arg2,
   SUB: (arg1, arg2) => arg1 - arg2,
@@ -13,28 +13,46 @@ for (let i = 0; i < N; i++) {
   const operation = inputs[0];
   const arg1 = inputs[1];
   const arg2 = inputs[2];
-  operations.push({cell: `$${i}`, operation, arg1, arg2});
+  const cell = `$${i}`;
+  operations[cell] = { cell, operation, arg1, arg2 };
 }
-
-console.log(valuesSheet, operations);
 
 function processArguments(funcOperation) {
   if (typeof funcOperation === "Number") {
     return funcOperation;
   }
 
-  const cell = funcOperation["cell"];
+  const { cell, operation } = funcOperation;
+  let { arg1, arg2 } = funcOperation;
 
-  if (funcOperation['operation'] === "VALUE") {
-    const arg1 = funcOperation['arg1']
+  if (operation === "VALUE") {
     valuesSheet[cell] = arg1;
-    return { cell, result: arg1 };
+    return { cell, operation, arg1, arg2 };
   } else {
-    const arg1 = processArguments(operations[funcOperation['arg1']]);
-    const arg2 = processArguments(operations[funcOperation['arg2']]);
-    return { cell, result: calculator(arg1, arg2) };
+    if (isNaN(arg1)) {
+      arg1 = processArguments(operations[arg1])["arg1"];
+    }
+    if (isNaN(arg2)) {
+      arg2 = processArguments(operations[arg2])["arg1"];
+    }
+    arg1 = Number(arg1);
+    arg2 = Number(arg2);
+    const result = calculator[operation](arg1, arg2)
+    valuesSheet[cell] = result;
+    return { cell, operation, arg1: result, arg2 };
   }
 }
 
-const startOperation = operations[0];
-console.log(processArguments(startOperation));
+function iterateOverOperations() {
+  const arrayOperations = Object.values(operations);
+  arrayOperations.forEach((op, i) => {
+    const response = processArguments(op);
+    if (typeof response === "Number") {
+      console.log(response);
+    } else {
+      console.log(response["arg1"]);
+    }
+  });
+}
+
+iterateOverOperations();

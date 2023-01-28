@@ -17,41 +17,38 @@ for (let i = 0; i < N; i++) {
   operations[cell] = { cell, operation, arg1, arg2 };
 }
 
-function processArguments(funcOperation) {
-  if (typeof funcOperation === "Number") {
-    return funcOperation;
-  }
+console.error(operations);
 
+function processArguments(funcOperation) {
   const { cell, operation } = funcOperation;
   let { arg1, arg2 } = funcOperation;
 
   if (operation === "VALUE") {
     valuesSheet[cell] = arg1;
-    return { cell, operation, arg1, arg2 };
-  } else {
-    if (isNaN(arg1)) {
+    while(isNaN(arg1)) {
       arg1 = processArguments(operations[arg1])["arg1"];
     }
-    if (isNaN(arg2)) {
-      arg2 = processArguments(operations[arg2])["arg1"];
+    return { cell, operation, arg1, arg2 };
+  } else {
+      while(isNaN(arg1)) {
+        arg1 = processArguments(operations[arg1])["arg1"];
+      }
+      while(isNaN(arg2)) {
+        arg2 = processArguments(operations[arg2])["arg1"];
+      }
     }
-    arg1 = Number(arg1);
-    arg2 = Number(arg2);
+    arg1 = parseInt(arg1);
+    arg2 = parseInt(arg2);
     const result = calculator[operation](arg1, arg2)
     valuesSheet[cell] = result;
     return { cell, operation, arg1: result, arg2 };
-  }
 }
 
 function iterateOverOperations() {
   const arrayOperations = Object.values(operations);
-  arrayOperations.forEach((op, i) => {
+  arrayOperations.forEach((op) => {
     const response = processArguments(op);
-    if (typeof response === "Number") {
-      console.log(response);
-    } else {
-      console.log(response["arg1"]);
-    }
+    console.log(response["arg1"]);
   });
 }
 

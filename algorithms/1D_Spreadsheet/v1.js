@@ -17,17 +17,19 @@ for (let i = 0; i < N; i++) {
   operations[cell] = { cell, operation, arg1, arg2 };
 }
 
-console.error(operations);
-
 function processArguments(funcOperation) {
   const { cell, operation } = funcOperation;
   let { arg1, arg2 } = funcOperation;
 
+  if (valuesSheet.hasOwnProperty(cell)) {
+    return { cell, operation, arg1: valuesSheet[cell], arg2: "_" };
+  }
+
   if (operation === "VALUE") {
-    valuesSheet[cell] = arg1;
     while(isNaN(arg1)) {
       arg1 = processArguments(operations[arg1])["arg1"];
     }
+    valuesSheet[cell] = arg1;
     return { cell, operation, arg1, arg2 };
   } else {
       while(isNaN(arg1)) {
@@ -47,8 +49,12 @@ function processArguments(funcOperation) {
 function iterateOverOperations() {
   const arrayOperations = Object.values(operations);
   arrayOperations.forEach((op) => {
-    const response = processArguments(op);
-    console.log(response["arg1"]);
+    const response = Number(processArguments(op)["arg1"]);
+    if (response !== -0) {
+      console.log(response);
+    } else {
+      console.log(0)
+    }
   });
 }
 
